@@ -1,4 +1,9 @@
-import React, { useReducer, createContext, useContext } from "react";
+import React, {
+  useReducer,
+  createContext,
+  useContext,
+  useCallback,
+} from "react";
 
 const TransactionContext = createContext();
 
@@ -11,7 +16,7 @@ const transactionsReducer = (transactions, action) => {
 
   switch (type) {
     case "ADD_TRANSACTION":
-      newTransactions = [...transactions, payload];
+      newTransactions = [payload, ...transactions];
       localStorage.setItem("transactions", JSON.stringify(newTransactions));
       return newTransactions;
     case "DELETE_TRANSACTION":
@@ -31,18 +36,25 @@ const TransactionProvider = ({ children }) => {
     initialTransaction
   );
 
-  const addTransaction = (transaction) => {
-    dispatch({
-      type: "ADD_TRANSACTION",
-      payload: transaction,
-    });
-  };
-  const deleteTransaction = (id) => {
-    dispatch({
-      type: "DELETE_TRANSACTION",
-      payload: id,
-    });
-  };
+  const addTransaction = useCallback(
+    (transaction) => {
+      dispatch({
+        type: "ADD_TRANSACTION",
+        payload: transaction,
+      });
+    },
+    [dispatch]
+  );
+
+  const deleteTransaction = useCallback(
+    (id) => {
+      dispatch({
+        type: "DELETE_TRANSACTION",
+        payload: id,
+      });
+    },
+    [dispatch]
+  );
 
   const balance = transactions.reduce((acc, currVal) => {
     return currVal.type === "Expense"
@@ -83,56 +95,28 @@ function getDummyTransactions() {
       category: "Investments",
       type: "Income",
       date: "2020-11-16",
-      id: "33b295b8-a8cb-49f0-8f0d-bb268686de1a",
-    },
-    {
-      amount: 50,
-      category: "Salary",
-      type: "Income",
-      date: "2020-11-13",
-      id: "270304a8-b11d-4e16-9341-33df641ede64",
+      id: "33b295b8-a8cb-49f0-8f0d-bb260686de1a",
     },
     {
       amount: 123,
       category: "Car",
       type: "Expense",
       date: "2020-11-16",
-      id: "0f72e66e-e144-4a72-bbc1-c3c92018635e",
+      id: "0f72e66e-e144-4a72-bbc1-c3c90018635e",
     },
     {
       amount: 50,
       category: "Pets",
       type: "Expense",
       date: "2020-11-13",
-      id: "c5647dde-d857-463d-8b4e-1c866cc5f83e",
+      id: "c5647dde-d857-463d-8b4e-1c966cc5f83e",
     },
     {
       amount: 500,
       category: "Travel",
       type: "Expense",
       date: "2020-11-13",
-      id: "365a4ebd-9892-4471-ad55-36077e4121a9",
-    },
-    {
-      amount: 50,
-      category: "Investments",
-      type: "Income",
-      date: "2020-11-23",
-      id: "80cf7e33-fc3e-4f9f-a2aa-ecf140711460",
-    },
-    {
-      amount: 500,
-      category: "Savings",
-      type: "Income",
-      date: "2020-11-23",
-      id: "ef090181-21d1-4568-85c4-5646232085b2",
-    },
-    {
-      amount: 5,
-      category: "Savings",
-      type: "Income",
-      date: "2020-11-23",
-      id: "037a35a3-40ec-4212-abe0-cc485a98aeee",
+      id: "365a4ebd-9892-4471-ad55-36077e0121a9",
     },
   ];
 }

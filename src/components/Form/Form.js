@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   TextField,
   Typography,
@@ -16,6 +16,8 @@ import {
   expenseCategories,
 } from "../../constants/categories";
 import { formatDate } from "../../utils/formatDate";
+import { useTransactionContext } from "../../context/transactions";
+import { v4 as uuid } from "uuid";
 
 const initialState = {
   amount: "",
@@ -27,21 +29,23 @@ const initialState = {
 const NewTransactionForm = () => {
   const { button } = useStyles();
   const [formData, setFormData] = useState(initialState);
+  const { addTransaction } = useTransactionContext();
 
   const createTransaction = useCallback(() => {
     if (Number.isNaN(Number(formData.amount)) || !formData.date.includes("-"))
       return;
 
     if (incomeCategories.map((iC) => iC.category).includes(formData.category)) {
-      setFormData({ ...formData, type: "Income" });
+      addTransaction({ ...formData, type: "Income", id: uuid() });
     } else if (
       expenseCategories.map((iC) => iC.category).includes(formData.category)
     ) {
-      setFormData({ ...formData, type: "Expense" });
+      setFormData();
+      addTransaction({ ...formData, type: "Expense", id: uuid() });
     }
 
     setFormData(initialState);
-  }, [formData]);
+  }, [formData, addTransaction]);
 
   const selectedCategories =
     formData.type === "Income" ? incomeCategories : expenseCategories;
@@ -88,7 +92,9 @@ const NewTransactionForm = () => {
           type="number"
           label="Amount"
           value={formData.amount}
-          onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, amount: Number(e.target.value) })
+          }
           fullWidth
         />
       </Grid>

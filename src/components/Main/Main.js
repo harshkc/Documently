@@ -11,15 +11,17 @@ import useStyles from "./styles";
 import Form from "../Form/Form";
 import List from "../List/List";
 import InfoCard from "../InfoCard";
+import { useTransactionContext } from "../../context/transactions";
 
 const Main = () => {
   const { root, cardContent, divider } = useStyles();
+  const { balance } = useTransactionContext();
 
   return (
     <Card className={root}>
       <CardHeader title="Expensly" />
       <CardContent className={cardContent}>
-        <Typography variant="h5">Total Balance: $0.00</Typography>
+        <Typography variant="h5">Total Balance: ${balance}</Typography>
         <Typography
           variant="subtitle1"
           style={{ lineHeight: "1.5em", marginTop: "20px" }}
