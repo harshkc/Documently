@@ -6,6 +6,7 @@ import React, {
 } from "react";
 
 const TransactionContext = createContext();
+TransactionContext.displayName = "TransactionContext";
 
 const initialTransaction =
   JSON.parse(localStorage.getItem("transactions")) || getDummyTransactions();

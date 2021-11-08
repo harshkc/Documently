@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  Typography,
-  Grid,
-  Divider,
-} from "@material-ui/core";
+import { Card, CardHeader, CardContent, Typography, Grid, Divider } from "@material-ui/core";
 import useStyles from "./styles";
 import Form from "../Form/Form";
 import List from "../List/List";
@@ -21,11 +14,10 @@ const Main = () => {
     <Card className={root}>
       <CardHeader title="Expensly" />
       <CardContent className={cardContent}>
-        <Typography variant="h5">Total Balance: ${balance}</Typography>
-        <Typography
-          variant="subtitle1"
-          style={{ lineHeight: "1.5em", marginTop: "20px" }}
-        >
+        <Typography variant="h5">
+          Total Balance: <strong>${balance}</strong>
+        </Typography>
+        <Typography variant="subtitle1" style={{ lineHeight: "1.5em", marginTop: "20px" }}>
           <InfoCard />
         </Typography>
         <Divider className={divider} />
