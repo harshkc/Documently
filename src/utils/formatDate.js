@@ -14,4 +14,4 @@ const formatDate = (date) => {
   return [year, month, day].join("-");
 };
 
-export default formatDate;
+export { formatDate };

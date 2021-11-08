@@ -19,9 +19,7 @@ const Main = () => {
     <Card className={root}>
       <CardHeader title="Expensly" />
       <CardContent className={cardContent}>
-        <Typography align="center" variant="h5">
-          Total Balance: $0.00
-        </Typography>
+        <Typography variant="h5">Total Balance: $0.00</Typography>
         <Typography
           variant="subtitle1"
           style={{ lineHeight: "1.5em", marginTop: "20px" }}
