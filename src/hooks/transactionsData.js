@@ -15,6 +15,7 @@ const useTransactionsData = (isExpense) => {
     (acc, transaction) => acc + transaction.amount,
     0
   );
+
   const categories = isExpense ? expenseCategories : incomeCategories;
 
   matchedTransactions.forEach((transaction) => {
@@ -31,13 +32,13 @@ const useTransactionsData = (isExpense) => {
   );
 
   const chartData = {
-    labels: filteredCategories.map((category) => category.category),
     datasets: [
       {
         data: filteredCategories.map((category) => category.amount),
         backgroundColor: filteredCategories.map((category) => category.color),
       },
     ],
+    labels: filteredCategories.map((category) => category.category),
   };
   return { chartData, total, filteredCategories };
 };
