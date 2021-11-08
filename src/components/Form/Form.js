@@ -32,10 +32,10 @@ const NewTransactionForm = () => {
     if (Number.isNaN(Number(formData.amount)) || !formData.date.includes("-"))
       return;
 
-    if (incomeCategories.map((iC) => iC.type).includes(formData.category)) {
+    if (incomeCategories.map((iC) => iC.category).includes(formData.category)) {
       setFormData({ ...formData, type: "Income" });
     } else if (
-      expenseCategories.map((iC) => iC.type).includes(formData.category)
+      expenseCategories.map((iC) => iC.category).includes(formData.category)
     ) {
       setFormData({ ...formData, type: "Expense" });
     }
@@ -75,8 +75,8 @@ const NewTransactionForm = () => {
             }
           >
             {selectedCategories.map((c) => (
-              <MenuItem key={c.type} value={c.type}>
-                {c.type}
+              <MenuItem key={c.category} value={c.category}>
+                {c.category}
               </MenuItem>
             ))}
           </Select>
