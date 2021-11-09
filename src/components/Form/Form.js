@@ -159,7 +159,7 @@ const NewTransactionForm = () => {
       <Button
         className={button}
         variant="outlined"
-        color="primary"
+        color="secondary"
         fullWidth
         onClick={createTransaction}
       >
