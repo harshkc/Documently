@@ -10,15 +10,13 @@ const Details = ({ isExpense = false }) => {
   const { total, chartData } = useTransactionsData(isExpense);
 
   return (
-    <div>
-      <Card className={isExpense ? expense : income}>
-        <CardHeader title={isExpense ? "Expense" : "Income"} />
-        <CardContent>
-          <Typography variant="h5">${total}</Typography>
-          <Doughnut data={chartData} />
-        </CardContent>
-      </Card>
-    </div>
+    <Card className={isExpense ? expense : income}>
+      <CardHeader title={isExpense ? "Expense" : "Income"} />
+      <CardContent>
+        <Typography variant="h5">₹{total}</Typography>
+        <Doughnut data={chartData} />
+      </CardContent>
+    </Card>
   );
 };
 

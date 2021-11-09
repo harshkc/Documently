@@ -21,20 +21,12 @@ const List = () => {
   return (
     <MUIList dense={false} className={classes.list}>
       {transactions.map((transaction) => (
-        <Slide
-          direction="down"
-          in
-          mountOnEnter
-          unmountOnExit
-          key={transaction.id}
-        >
+        <Slide direction="down" in mountOnEnter unmountOnExit key={transaction.id}>
           <ListItem>
             <ListItemAvatar>
               <Avatar
                 className={
-                  transaction.type === "Income"
-                    ? classes.avatarIncome
-                    : classes.avatarExpense
+                  transaction.type === "Income" ? classes.avatarIncome : classes.avatarExpense
                 }
               >
                 <MoneyOff />
@@ -42,7 +34,7 @@ const List = () => {
             </ListItemAvatar>
             <ListItemText
               primary={transaction.category}
-              secondary={`$${transaction.amount} - ${transaction.date}`}
+              secondary={`₹${transaction.amount} - ${transaction.date}`}
             />
             <ListItemSecondaryAction>
               <IconButton
