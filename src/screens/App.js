@@ -4,20 +4,27 @@ import { Grid } from "@material-ui/core";
 import useStyles from "./styles";
 import Details from "../components/Details/Details";
 import Main from "../components/Main/Main";
+import Brightness4Icon from "@material-ui/icons/Brightness4";
+import Brightness7Icon from "@material-ui/icons/Brightness7";
+import IconButton from "@material-ui/core/IconButton";
 
-import {
-  PushToTalkButton,
-  PushToTalkButtonContainer,
-} from "@speechly/react-ui";
+import { PushToTalkButton, PushToTalkButtonContainer } from "@speechly/react-ui";
 import { SpeechState, useSpeechContext } from "@speechly/react-client";
 
-const App = () => {
+const ThemeIcon = ({ theme, toggleTheme }) => {
+  return (
+    <IconButton edge="end" color="inherit" aria-label="mode" onClick={toggleTheme}>
+      {theme === "light" ? <Brightness7Icon /> : <Brightness4Icon />}
+    </IconButton>
+  );
+};
+
+const App = ({ theme, toggleTheme }) => {
   const { grid, main, desktop, mobile, last } = useStyles();
   const { speechState } = useSpeechContext();
   const mainRef = React.useRef(null);
 
-  const executeScroll = () =>
-    mainRef.current.scrollIntoView({ behavior: "smooth" });
+  const executeScroll = () => mainRef.current.scrollIntoView({ behavior: "smooth" });
 
   React.useEffect(() => {
     if (speechState === SpeechState.Recording) {
@@ -39,7 +46,9 @@ const App = () => {
           <Details />
         </Grid>
         <Grid ref={mainRef} item xs={12} sm={3} className={main}>
-          <Main />
+          <Main>
+            <ThemeIcon theme={theme} toggleTheme={toggleTheme} />
+          </Main>
         </Grid>
         <Grid item xs={12} sm={4} className={desktop}>
           <Details />
