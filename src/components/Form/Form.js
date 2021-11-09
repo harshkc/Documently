@@ -114,6 +114,7 @@ const NewTransactionForm = () => {
         <FormControl fullWidth>
           <InputLabel>Type</InputLabel>
           <Select
+            color="secondary"
             value={formData.type}
             onChange={(e) => setFormData({ ...formData, type: e.target.value })}
           >
@@ -126,6 +127,7 @@ const NewTransactionForm = () => {
         <FormControl fullWidth>
           <InputLabel>Category</InputLabel>
           <Select
+            color="secondary"
             value={formData.category}
             onChange={(e) => setFormData({ ...formData, category: e.target.value })}
           >
@@ -142,6 +144,7 @@ const NewTransactionForm = () => {
         <TextField
           type="number"
           label="Amount"
+          color="secondary"
           value={formData.amount}
           onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
           fullWidth
@@ -152,6 +155,7 @@ const NewTransactionForm = () => {
           fullWidth
           label="Date"
           type="date"
+          color="secondary"
           value={formData.date}
           onChange={(e) => setFormData({ ...formData, date: formatDate(e.target.value) })}
         />

@@ -14,17 +14,20 @@ const Main = ({ children }) => {
     <Card className={root}>
       <Grid container spacing={2}>
         <Grid item xs={10}>
-          <CardHeader title="Expensly" />
+          <CardHeader title={<strong>Expensly</strong>} style={{ color: "#E77C97" }} />
         </Grid>
         <Grid item xs={2}>
           {children}
         </Grid>
       </Grid>
       <CardContent className={cardContent}>
-        <Typography variant="h5">
-          Total Balance: <strong>₹{balance}</strong>
+        <Typography variant="h6">
+          Total Balance:
+          <span style={{ color: balance > 0 ? "green" : "red" }}>
+            <strong> ₹{balance}</strong>
+          </span>
         </Typography>
-        <Typography variant="subtitle1" style={{ lineHeight: "1.5em", marginTop: "20px" }}>
+        <Typography variant="subtitle2" style={{ lineHeight: "1.5em", marginTop: "20px" }}>
           <InfoCard />
         </Typography>
         <Divider className={divider} />
