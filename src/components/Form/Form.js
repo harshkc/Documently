@@ -8,6 +8,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  FormHelperText,
 } from "@material-ui/core";
 
 import useStyles from "./styles";
@@ -29,11 +30,23 @@ const NewTransactionForm = () => {
   const { button } = useStyles();
   const [formData, setFormData] = useState(initialState);
   const [open, setOpen] = useState(false);
+  const [amountError, setAmountError] = useState(false);
+  const [categoryError, setCategoryError] = useState(false);
+
   const { addTransaction } = useTransactionContext();
   const { segment } = useSpeechContext();
 
   const createTransaction = useCallback(() => {
-    if (Number.isNaN(Number(formData.amount)) || !formData.date.includes("-")) return;
+    if (formData.amount === "") {
+      setAmountError(true);
+      return;
+    }
+    if (formData.category === "") {
+      setCategoryError(true);
+      return;
+    }
+
+    if (!formData.date.includes("-")) return;
 
     if (incomeCategories.map((iC) => iC.category).includes(formData.category)) {
       setFormData({ ...formData, type: "Income" });
@@ -127,9 +140,13 @@ const NewTransactionForm = () => {
         <FormControl fullWidth>
           <InputLabel>Category</InputLabel>
           <Select
+            error={categoryError}
             color="secondary"
             value={formData.category}
-            onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+            onChange={(e) => {
+              setFormData({ ...formData, category: e.target.value });
+              setCategoryError(false);
+            }}
           >
             {selectedCategories.map((c) => (
               <MenuItem key={c.category} value={c.category}>
@@ -137,18 +154,25 @@ const NewTransactionForm = () => {
               </MenuItem>
             ))}
           </Select>
+          {categoryError && <FormHelperText>Category is required!</FormHelperText>}
         </FormControl>
       </Grid>
 
       <Grid item xs={6}>
         <TextField
+          required
           type="number"
           label="Amount"
           color="secondary"
           value={formData.amount}
-          onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
+          error={amountError}
+          onChange={(e) => {
+            setFormData({ ...formData, amount: e.target.value });
+            if (e.target.value !== "") setAmountError(false);
+          }}
           fullWidth
         />
+        {amountError && <FormHelperText>Amount is required!</FormHelperText>}
       </Grid>
       <Grid item xs={6}>
         <TextField
