@@ -37,6 +37,7 @@ const NewTransactionForm = () => {
   const { segment } = useSpeechContext();
 
   const createTransaction = useCallback(() => {
+    if (Number.isNaN(Number(formData.amount)) || !formData.date.includes("-")) return;
     if (formData.amount === "") {
       setAmountError(true);
       return;
@@ -45,8 +46,6 @@ const NewTransactionForm = () => {
       setCategoryError(true);
       return;
     }
-
-    if (!formData.date.includes("-")) return;
 
     if (incomeCategories.map((iC) => iC.category).includes(formData.category)) {
       setFormData({ ...formData, type: "Income" });

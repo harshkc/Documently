@@ -14,7 +14,7 @@ const Main = ({ children }) => {
     <Card className={root}>
       <Grid container spacing={2}>
         <Grid item xs={10}>
-          <CardHeader title={<strong>Expensly</strong>} style={{ color: "#E77C97" }} />
+          <CardHeader title={<strong>Xpensly</strong>} style={{ color: "#E77C97" }} />
         </Grid>
         <Grid item xs={2}>
           {children}

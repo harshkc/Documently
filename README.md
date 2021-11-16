@@ -1,5 +1,4 @@
-# [Expensly](https://xpensly.netlify.app/) <img width="60" src="images/xpensly-logo.png">
-
+# [Xpensly](https://xpensly.netlify.app/) <img width="60" src="images/xpensly-logo.png">
 
 ![React Badge](http://img.shields.io/badge/Powered%20By-React-blue?style=for-the-badge&logo=)&nbsp;
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=&logoColor)&nbsp;
@@ -9,28 +8,29 @@
 [![Website Badge](https://img.shields.io/badge/Visit-Now-green?style=for-the-badge&logo=vercel)](https://xpensly.netlify.app/)
 
 ## Overview 👀
+
 <img src="images/xpensly-light.jpeg">
 <img src="images/xpensly-dark.jpeg">
 
 - Manage day to day transactions easily 💸
-- Voice 🎙️ based transactions management 💰 
+- Voice 🎙️ based transactions management 💰
 - Clean and Responsive UI with light ⚡ and dark mode
-- Local Storage support for persistent of data🌐  
+- Persistence of data across multiple sessions
 
-## What is Expensly? 
+## What is Xpensly?
 
-#### Expensly is a web app for journaling day to day transactions. Users can create or delete transactions details using voice.
+#### Xpensly is a web app for journaling day to day transactions. Users can create or delete transactions details hands-free with ease.
 
 ## Project setup 💻
 
 ```
 > Cloning the repo
-    >> git clone https://github.com/harhskc/expensly.git
-    >> cd Expensly
+    >> git clone https://github.com/harhskc/Xpensly.git
+    >> cd Xpensly
 > Install all dependencies
     >> yarn install
 > Start the app on localhost:3000
     >> yarn start
 > Visit the website on http://localhost:3000/
-    
+
 ```
