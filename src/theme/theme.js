@@ -1,11 +1,13 @@
+import loginBG from "../assets/login-bg.jpg";
+
 const light = {
   overrides: {
     MuiCssBaseline: {
       "@global": {
         body: {
-          background: "linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%)",
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: "fixed",
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1),rgba(0, 0, 0, 0.5)),${`url(${loginBG})`}`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         },
       },
     },
@@ -20,7 +22,9 @@ const dark = {
     MuiCssBaseline: {
       "@global": {
         body: {
-          background: "linear-gradient(to top, #16222a, #3a6073)",
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.55),rgba(0, 0, 0, 0.6)),${`url(${loginBG})`}`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         },
       },
     },
@@ -30,4 +34,4 @@ const dark = {
   },
 };
 
-export { light, dark };
+export {light, dark};
