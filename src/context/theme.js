@@ -1,11 +1,11 @@
 import React from "react";
-import { ThemeProvider } from "@material-ui/core";
-import { createTheme } from "@material-ui/core/styles";
+import {ThemeProvider} from "@material-ui/core";
+import {createTheme} from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import App from "../screens/App";
-import { light, dark } from "../theme/theme";
+import {light, dark} from "../theme/theme";
 
-const AppWithTheme = () => {
+const AppWithTheme = ({handleLogout, user}) => {
   const [theme, setTheme] = React.useState(JSON.parse(localStorage.getItem("theme")) || "light");
 
   const toggleTheme = () => {
@@ -17,9 +17,9 @@ const AppWithTheme = () => {
   return (
     <ThemeProvider theme={appliedTheme}>
       <CssBaseline />
-      <App theme={theme} toggleTheme={toggleTheme} />
+      <App theme={theme} toggleTheme={toggleTheme} handleLogout={handleLogout} user={user} />
     </ThemeProvider>
   );
 };
 
-export { AppWithTheme };
+export {AppWithTheme};
