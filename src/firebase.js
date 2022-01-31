@@ -2,20 +2,21 @@
 import {initializeApp} from "firebase/app";
 import {getAnalytics} from "firebase/analytics";
 import {getAuth, GoogleAuthProvider} from "firebase/auth";
-// import { getAnalytics } from "firebase/analytics";
+import {getFirestore} from "firebase/firestore";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyB7eIr4XQEhtOZhV8LQhN7kbi7IzpDUg2s",
-  authDomain: "mhealth-cedd0.firebaseapp.com",
-  projectId: "mhealth-cedd0",
-  storageBucket: "mhealth-cedd0.appspot.com",
-  messagingSenderId: "914900465843",
-  appId: "1:914900465843:web:eb2e7c9b8d5678768518c6",
-  measurementId: "G-QVZ1VCMZB3",
+  apiKey: process.env.REACT_APP_FB_API_KEY,
+  authDomain: "xpensly.firebaseapp.com",
+  projectId: "xpensly",
+  storageBucket: "xpensly.appspot.com",
+  messagingSenderId: process.env.FB_MSI,
+  appId: process.env.REACT_APP_FB_APP_ID,
+  measurementId: process.env.REACT_APP_FB_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
@@ -23,5 +24,6 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
+const db = getFirestore(app);
 
-export {auth, provider, analytics};
+export {auth, provider, analytics, db};
