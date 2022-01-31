@@ -1,11 +1,12 @@
 import React from "react";
 import {IconButton, Menu, MenuItem} from "@material-ui/core";
+import {Avatar as AccountAvatar} from "@material-ui/core";
 
 const Avatar = ({photoURL, handleClick, anchorEl, open, handleClose, handleLogout}) => {
   return (
     <>
       <IconButton style={{padding: "0", marginLeft: "auto"}} onClick={handleClick}>
-        <Avatar src={photoURL} />
+        <AccountAvatar src={photoURL} />
       </IconButton>
       <Menu
         id='demo-positioned-menu'

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import {
   TextField,
   Typography,
@@ -12,12 +12,12 @@ import {
 } from "@material-ui/core";
 
 import useStyles from "./styles";
-import { incomeCategories, expenseCategories } from "../../constants/categories";
-import { formatDate } from "../../utils/formatDate";
-import { CustomizedSnackbar as Snackbar } from "../../components/Snackbar/Snackbar";
-import { useTransactionContext } from "../../context/transactions";
-import { v4 as uuid } from "uuid";
-import { useSpeechContext } from "@speechly/react-client";
+import {incomeCategories, expenseCategories} from "../../constants/categories";
+import {formatDate} from "../../utils/formatDate";
+import {CustomizedSnackbar as Snackbar} from "../../components/Snackbar/Snackbar";
+import {useTransactionContext} from "../../context/transactions";
+import {v4 as uuid} from "uuid";
+import {useSpeechContext} from "@speechly/react-client";
 
 const initialState = {
   amount: "",
@@ -27,14 +27,14 @@ const initialState = {
 };
 
 const NewTransactionForm = () => {
-  const { button } = useStyles();
+  const {button} = useStyles();
   const [formData, setFormData] = useState(initialState);
   const [open, setOpen] = useState(false);
   const [amountError, setAmountError] = useState(false);
   const [categoryError, setCategoryError] = useState(false);
 
-  const { addTransaction } = useTransactionContext();
-  const { segment } = useSpeechContext();
+  const {addTransaction} = useTransactionContext();
+  const {segment} = useSpeechContext();
 
   const createTransaction = useCallback(() => {
     if (Number.isNaN(Number(formData.amount)) || !formData.date.includes("-")) return;
@@ -48,9 +48,9 @@ const NewTransactionForm = () => {
     }
 
     if (incomeCategories.map((iC) => iC.category).includes(formData.category)) {
-      setFormData({ ...formData, type: "Income" });
+      setFormData({...formData, type: "Income"});
     } else if (expenseCategories.map((iC) => iC.category).includes(formData.category)) {
-      setFormData({ ...formData, type: "Expense" });
+      setFormData({...formData, type: "Expense"});
     }
 
     addTransaction({
@@ -86,17 +86,17 @@ const NewTransactionForm = () => {
         const category = entity.value[0] + entity.value.slice(1).toLowerCase();
         switch (entity.type) {
           case "amount":
-            setFormData({ ...formData, amount: entity.value });
+            setFormData({...formData, amount: entity.value});
             break;
           case "category":
             if (incomeCategories.map((i) => i.category).includes(category)) {
-              setFormData({ ...formData, type: "Income", category });
+              setFormData({...formData, type: "Income", category});
             } else if (expenseCategories.map((i) => i.category).includes(category)) {
-              setFormData({ ...formData, type: "Expense", category });
+              setFormData({...formData, type: "Expense", category});
             }
             break;
           case "date":
-            setFormData({ ...formData, date: entity.value });
+            setFormData({...formData, date: entity.value});
             break;
           default:
             break;
@@ -116,22 +116,20 @@ const NewTransactionForm = () => {
     <Grid container spacing={2}>
       <Snackbar open={open} setOpen={setOpen} />
       <Grid item xs={12}>
-        <Typography align="center" variant="subtitle2" gutterBottom>
-          {segment ? (
-            <div className="segment">{segment.words.map((w) => w.value).join(" ")}</div>
-          ) : null}
+        <Typography align='center' variant='subtitle2' gutterBottom>
+          {segment ? <div className='segment'>{segment.words.map((w) => w.value).join(" ")}</div> : null}
         </Typography>
       </Grid>
       <Grid item xs={6}>
         <FormControl fullWidth>
           <InputLabel>Type</InputLabel>
           <Select
-            color="secondary"
+            color='secondary'
             value={formData.type}
-            onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+            onChange={(e) => setFormData({...formData, type: e.target.value})}
           >
-            <MenuItem value="Income">Income</MenuItem>
-            <MenuItem value="Expense">Expense</MenuItem>
+            <MenuItem value='Income'>Income</MenuItem>
+            <MenuItem value='Expense'>Expense</MenuItem>
           </Select>
         </FormControl>
       </Grid>
@@ -140,10 +138,10 @@ const NewTransactionForm = () => {
           <InputLabel>Category</InputLabel>
           <Select
             error={categoryError}
-            color="secondary"
+            color='secondary'
             value={formData.category}
             onChange={(e) => {
-              setFormData({ ...formData, category: e.target.value });
+              setFormData({...formData, category: e.target.value});
               setCategoryError(false);
             }}
           >
@@ -160,13 +158,13 @@ const NewTransactionForm = () => {
       <Grid item xs={6}>
         <TextField
           required
-          type="number"
-          label="Amount"
-          color="secondary"
+          type='number'
+          label='Amount'
+          color='secondary'
           value={formData.amount}
           error={amountError}
           onChange={(e) => {
-            setFormData({ ...formData, amount: e.target.value });
+            setFormData({...formData, amount: e.target.value});
             if (e.target.value !== "") setAmountError(false);
           }}
           fullWidth
@@ -176,20 +174,14 @@ const NewTransactionForm = () => {
       <Grid item xs={6}>
         <TextField
           fullWidth
-          label="Date"
-          type="date"
-          color="secondary"
+          label='Date'
+          type='date'
+          color='secondary'
           value={formData.date}
-          onChange={(e) => setFormData({ ...formData, date: formatDate(e.target.value) })}
+          onChange={(e) => setFormData({...formData, date: formatDate(e.target.value)})}
         />
       </Grid>
-      <Button
-        className={button}
-        variant="outlined"
-        color="secondary"
-        fullWidth
-        onClick={createTransaction}
-      >
+      <Button className={button} variant='outlined' color='secondary' fullWidth onClick={createTransaction}>
         Create
       </Button>
     </Grid>
