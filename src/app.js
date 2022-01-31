@@ -3,18 +3,34 @@ import {TransactionProvider} from "./context/transactions";
 import {SpeechProvider} from "@speechly/react-client";
 import {AppWithTheme} from "./context/theme";
 import Login from "./components/auth/Login";
-import {auth} from "./firebase";
+import {auth, db} from "./firebase";
 import {onAuthStateChanged, signOut} from "firebase/auth";
+import {doc, setDoc, getDoc} from "firebase/firestore";
 
 const App = () => {
   const [user, setUser] = React.useState(JSON.parse(localStorage.getItem("XauthUser")) || null);
 
   React.useEffect(() => {
+    const createUser = async (authUser) => {
+      const userSnapshot = await getDoc(doc(db, "users", authUser.id));
+      if (userSnapshot.exists()) {
+        return;
+      } else {
+        await setDoc(doc(db, "users", authUser.id), authUser);
+      }
+    };
+
     onAuthStateChanged(auth, (authUser) => {
       if (authUser) {
-        console.log("AuthUser", authUser);
-        setUser(authUser);
-        localStorage.setItem("XauthUser", JSON.stringify(authUser));
+        const userModel = {
+          id: authUser.uid,
+          email: authUser.email,
+          photoURL: authUser.photoURL,
+          displayName: authUser.displayName,
+        };
+        setUser(userModel);
+        createUser(userModel);
+        localStorage.setItem("XauthUser", JSON.stringify(userModel));
       }
     });
   }, []);
@@ -35,7 +51,7 @@ const App = () => {
 
   return user ? (
     <SpeechProvider appId={process.env.REACT_APP_SPEECHLY_ID} language='en-US'>
-      <TransactionProvider>
+      <TransactionProvider user={user}>
         <AppWithTheme handleLogout={handleLogout} user={user} />
       </TransactionProvider>
     </SpeechProvider>
