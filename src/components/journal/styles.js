@@ -2,7 +2,7 @@ import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    opacity: "0.99",
+    opacity: "0.98",
     boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)",
     borderRadius: "10px",
   },
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 0,
   },
   divider: {
-    margin: "20px 0",
+    margin: "10px 0",
   },
 }));
 export default useStyles;
