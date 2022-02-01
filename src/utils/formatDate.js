@@ -14,4 +14,17 @@ const formatDate = (date) => {
   return [year, month, day].join("-");
 };
 
-export { formatDate };
+const toShortFormat = (providedDate) => {
+  let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  let day = providedDate.getDate();
+
+  let monthIndex = providedDate.getMonth();
+  let monthName = monthNames[monthIndex];
+
+  let year = providedDate.getFullYear();
+
+  return `${day}-${monthName}-${year}`;
+};
+
+export {formatDate, toShortFormat};
