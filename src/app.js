@@ -1,11 +1,9 @@
 import * as React from "react";
-import {TransactionProvider} from "./context/transactions";
-import {SpeechProvider} from "@speechly/react-client";
-import {AppWithTheme} from "./context/theme";
 import Login from "./components/auth/Login";
 import {auth, db} from "./firebase";
 import {onAuthStateChanged, signOut} from "firebase/auth";
 import {doc, setDoc, getDoc} from "firebase/firestore";
+import Authenticated from "./screens/Authenticated";
 
 const App = () => {
   const [user, setUser] = React.useState(JSON.parse(localStorage.getItem("XauthUser")) || null);
@@ -49,15 +47,7 @@ const App = () => {
     }
   };
 
-  return user ? (
-    <SpeechProvider appId={process.env.REACT_APP_SPEECHLY_ID} language='en-US'>
-      <TransactionProvider user={user}>
-        <AppWithTheme handleLogout={handleLogout} user={user} />
-      </TransactionProvider>
-    </SpeechProvider>
-  ) : (
-    <Login />
-  );
+  return user ? <Authenticated user={user} handleLogout={handleLogout} /> : <Login />;
 };
 
 export default App;

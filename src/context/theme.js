@@ -2,7 +2,7 @@ import React from "react";
 import {ThemeProvider} from "@material-ui/core";
 import {createTheme} from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import App from "../screens/App";
+import App from "../screens/Xpenses";
 import {light, dark} from "../theme/theme";
 
 const AppWithTheme = ({handleLogout, user}) => {

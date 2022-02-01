@@ -1,4 +1,4 @@
-import React, {useReducer, createContext, useContext, useCallback} from "react";
+import React, {useReducer, createContext, useContext} from "react";
 import {db} from "../firebase";
 import {collection, doc, getDocs, setDoc, deleteDoc} from "firebase/firestore";
 import {useEffect} from "react";
@@ -6,7 +6,7 @@ import {useEffect} from "react";
 const TransactionContext = createContext();
 TransactionContext.displayName = "TransactionContext";
 
-const initialTransaction = [];
+const initialTransaction = JSON.parse(localStorage.getItem("transactions")) || [];
 
 const transactionsReducer = (transactions, action) => {
   const {type, payload} = action;
@@ -62,6 +62,7 @@ const TransactionProvider = ({children, user}) => {
 
   useEffect(() => {
     getTransactions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addTransaction = async (transaction) => {

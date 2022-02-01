@@ -1,13 +1,4 @@
 import React from "react";
-import useStyles from "./styles";
-import Details from "../components/Details/Details";
-import Main from "../components/Main/Main";
-import Brightness4Icon from "@material-ui/icons/Brightness4";
-import Brightness7Icon from "@material-ui/icons/Brightness7";
-import MenuIcon from "@material-ui/icons/Menu";
-
-import Avatar from "../components/Avatar/Avatar";
-
 import {
   Drawer,
   IconButton,
@@ -19,9 +10,52 @@ import {
   Typography,
   AppBar,
 } from "@material-ui/core";
+import Brightness4Icon from "@material-ui/icons/Brightness4";
+import Brightness7Icon from "@material-ui/icons/Brightness7";
+import BookIcon from "@material-ui/icons/Book";
+import MenuIcon from "@material-ui/icons/Menu";
+import XpenseIcon from "@material-ui/icons/AccountBalanceWallet";
+import useStyles from "./xpenseStyles";
 
+import {Link, Routes, Route, useLocation} from "react-router-dom";
 import {PushToTalkButton, PushToTalkButtonContainer} from "@speechly/react-ui";
 import {SpeechState, useSpeechContext} from "@speechly/react-client";
+
+import Details from "../components/Details/Details";
+import Main from "../components/Main/Main";
+import Avatar from "../components/Avatar/Avatar";
+import Journal from "./Journaly";
+
+const XpenseCard = ({mainRef}) => {
+  const {grid, main, desktop, mobile, last} = useStyles();
+
+  return (
+    <Grid
+      className={grid}
+      container
+      spacing={0}
+      alignItems='center'
+      justifyContent='center'
+      style={{height: "100vh"}}
+    >
+      <Grid item sm={4} className={mobile}>
+        <Details />
+      </Grid>
+      <Grid ref={mainRef} item xs={10} sm={9} md={4} lg={3} className={main}>
+        <Main />
+      </Grid>
+      <Grid item xs={10} sm={10} md={4} className={desktop}>
+        <Details />
+      </Grid>
+      <Grid item xs={10} sm={10} md={4} className={last}>
+        <Details isExpense={true} />
+      </Grid>
+      <PushToTalkButtonContainer>
+        <PushToTalkButton />
+      </PushToTalkButtonContainer>
+    </Grid>
+  );
+};
 
 const App = ({theme, toggleTheme, handleLogout, user}) => {
   const [openDrawer, setOpenDrawer] = React.useState(false);
@@ -33,9 +67,10 @@ const App = ({theme, toggleTheme, handleLogout, user}) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const {grid, main, desktop, navbar, mobile, last, navVisibile, drawerPaper} = useStyles();
+  const {navbar, navVisibile, drawerPaper} = useStyles();
   const {speechState} = useSpeechContext();
   const mainRef = React.useRef(null);
+  const location = useLocation();
 
   const executeScroll = () => mainRef.current.scrollIntoView({behavior: "smooth"});
 
@@ -56,6 +91,20 @@ const App = ({theme, toggleTheme, handleLogout, user}) => {
         className={navbar}
       >
         <IconButton
+          onClick={() => {}}
+          style={{
+            backgroundColor: "white",
+            padding: "0.4rem 0.6rem 0.3rem 0.6rem",
+            marginRight: "0.5rem",
+            marginBottom: "0.5rem",
+            color: "grey",
+          }}
+        >
+          <Link to={location.pathname === "/journaly" ? "/" : "/journaly"}>
+            {location.pathname === "/journaly" ? <XpenseIcon /> : <BookIcon />}
+          </Link>
+        </IconButton>
+        <IconButton
           onClick={toggleTheme}
           style={{
             backgroundColor: "white",
@@ -69,6 +118,7 @@ const App = ({theme, toggleTheme, handleLogout, user}) => {
         </IconButton>
         <Avatar
           photoURL={user.photoURL}
+          username={user.displayName}
           handleClick={handleClick}
           anchorEl={anchorEl}
           open={open}
@@ -91,6 +141,7 @@ const App = ({theme, toggleTheme, handleLogout, user}) => {
             </Typography>
             <Avatar
               photoURL={user.photoURL}
+              username={user.displayName}
               handleClick={handleClick}
               anchorEl={anchorEl}
               open={open}
@@ -110,11 +161,15 @@ const App = ({theme, toggleTheme, handleLogout, user}) => {
             >
               <List style={{margin: "2rem 1rem 2rem 1rem"}}>
                 <ListItem onClick={() => setOpenDrawer(false)}>
-                  <ListItemText>Xpensly</ListItemText>
+                  <ListItemText>
+                    <Link to='/'>Xpensly</Link>
+                  </ListItemText>
                 </ListItem>
                 <hr />
                 <ListItem onClick={() => setOpenDrawer(false)}>
-                  <ListItemText>Journally</ListItemText>
+                  <ListItemText>
+                    <Link to='/journaly'>Journally</Link>
+                  </ListItemText>
                 </ListItem>
                 <hr />
                 <ListItem onClick={toggleTheme}>
@@ -137,30 +192,10 @@ const App = ({theme, toggleTheme, handleLogout, user}) => {
           </Toolbar>
         </AppBar>
       </div>
-      <Grid
-        className={grid}
-        container
-        spacing={0}
-        alignItems='center'
-        justifyContent='center'
-        style={{height: "100vh"}}
-      >
-        <Grid item sm={4} className={mobile}>
-          <Details />
-        </Grid>
-        <Grid ref={mainRef} item xs={10} sm={9} md={4} lg={3} className={main}>
-          <Main />
-        </Grid>
-        <Grid item xs={10} sm={10} md={4} className={desktop}>
-          <Details />
-        </Grid>
-        <Grid item xs={10} sm={10} md={4} className={last}>
-          <Details isExpense={true} />
-        </Grid>
-        <PushToTalkButtonContainer>
-          <PushToTalkButton />
-        </PushToTalkButtonContainer>
-      </Grid>
+      <Routes>
+        <Route path='/' element={<XpenseCard mainRef={mainRef} />} />
+        <Route path='/journaly' exact element={<Journal user={user} />} />
+      </Routes>
     </div>
   );
 };
