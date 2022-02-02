@@ -1,15 +1,24 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [
-    {
-      "src": "Xpensly-logo.png",
-      "type": "image/png",
-      "sizes": "315x245"
-    }
-  ],
-  "start_url": ".",
+   "name": "Documently",
+  "short_name": "Documently",
+  "theme_color": "#7c3a82",
+  "background_color": "#8408b0",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/",
+   "icons": [
+    {
+      "src": "android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose" : "maskable any"
+    },
+    {
+      "src": "android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose" : "maskable any"
+    }
+  ]
 }

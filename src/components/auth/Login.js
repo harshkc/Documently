@@ -10,9 +10,7 @@ function Login() {
 
   const handleSubmit = async () => {
     await signInWithPopup(auth, provider)
-      .then((result) => {
-        console.log(result);
-      })
+      .then((result) => {})
       .catch((error) => {
         console.log(error);
       });
@@ -20,10 +18,12 @@ function Login() {
   return (
     <div className={loginContainer}>
       <div className={content}>
-        <img src={Logo} alt='logo' height='105px' width='150px' />
-        <span style={{fontWeight: "bold", fontSize: "28px"}}>Xpensly</span>
+        <img src={Logo} alt='logo' height='150px' width='150px' />
+        <span style={{fontWeight: "bold", fontSize: "28px"}}>Documently</span>
         <p style={{fontSize: "16px", margin: "1rem 0 2rem 0", color: "gray", textAlign: "center"}}>
-          All Of Your Expenses and Journaling At One Place
+          Document Your Transactions and Daily Journals
+          <br />
+          At Single Place
         </p>
         <div onClick={handleSubmit} className='google-btn'>
           <div className='google-icon-wrapper'>
