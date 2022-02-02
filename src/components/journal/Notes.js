@@ -2,22 +2,21 @@ import React from "react";
 import {Card, CardHeader, CardContent, Typography, Grid, Divider} from "@material-ui/core";
 import useStyles from "./styles";
 import {db} from "../../firebase";
-import {doc, getDoc, setDoc, deleteDoc} from "firebase/firestore";
+import {doc, getDoc, setDoc} from "firebase/firestore";
 import {toShortFormat} from "../../utils/formatDate";
 import {CircularProgress, Fab} from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
 import SaveIcon from "@material-ui/icons/Save";
-
-const getInitialState = () => {
-  return JSON.parse(localStorage.getItem("notes")) || "";
-};
+import {MuiPickersUtilsProvider, KeyboardDatePicker} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 const Notes = ({user}) => {
   const [note, setNote] = React.useState("");
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isSaving, setSaving] = React.useState(false);
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const [theDay, setTheDay] = React.useState(toShortFormat(new Date()));
 
   const timeout = React.useRef();
-  const today = toShortFormat(new Date());
 
   const getNotes = async (date) => {
     try {
@@ -33,44 +32,42 @@ const Notes = ({user}) => {
   };
 
   React.useEffect(() => {
-    getNotes(today);
+    getNotes(theDay);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const addNoteToDB = async (value) => {
+  const addNoteToDB = async (value, theDay) => {
     try {
       console.log("note", note);
-      await setDoc(doc(db, "users", user.id, "notes", today), {content: value});
+      await setDoc(doc(db, "users", user.id, "notes", theDay), {content: value});
       console.log("Note added to firestore");
     } catch (error) {
       console.log(error);
     }
-    setIsLoading(false);
-  };
-
-  const deleteNoteFromDB = async () => {
-    try {
-      const toDeleteRef = doc(db, "users", user.id, "notes", today);
-      await deleteDoc(toDeleteRef);
-    } catch (e) {
-      console.log(e);
-    }
+    setSaving(false);
   };
 
   const handleChange = (e) => {
     clearTimeout(timeout.current);
-    setIsLoading(true);
+    setSaving(true);
     setNote(e.target.value);
     timeout.current = setTimeout(() => {
-      addNoteToDB(e.target.value);
+      addNoteToDB(e.target.value, theDay);
     }, 3000);
+  };
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    const theDay = toShortFormat(date);
+    getNotes(theDay);
+    setTheDay(theDay);
   };
 
   const {root, cardContent, divider, wrapper, fabProgress, flexed} = useStyles();
   return (
     <Card className={root}>
       <Grid container spacing={2}>
-        <Grid item xs={10}>
+        <Grid item xs={8}>
           <CardHeader
             title={
               <Typography variant='h3' style={{fontWeight: "bold"}}>
@@ -80,9 +77,28 @@ const Notes = ({user}) => {
             style={{color: "#E77C97"}}
           />
         </Grid>
+        <Grid item xs={4}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              disableToolbar
+              variant='inline'
+              format='dd/MM/yyyy'
+              margin='normal'
+              id='date-picker-inline'
+              label='Fetch Journals'
+              minDate={new Date("2022-02-01")}
+              maxDate={new Date()}
+              value={selectedDate}
+              onChange={handleDateChange}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+            />
+          </MuiPickersUtilsProvider>
+        </Grid>
       </Grid>
       <CardContent className={cardContent}>
-        <Typography variant='h6'>{today}</Typography>
+        <Typography variant='h6'>{theDay}</Typography>
         <Divider className={divider} />
       </CardContent>
       <CardContent className={cardContent}>
@@ -94,9 +110,9 @@ const Notes = ({user}) => {
               </span>
               <div className={wrapper}>
                 <Fab size='small' aria-label='save' color='inherit'>
-                  {!isLoading ? <CheckIcon /> : <SaveIcon />}
+                  {!isSaving ? <CheckIcon /> : <SaveIcon />}
                 </Fab>
-                {isLoading && <CircularProgress size={51} className={fabProgress} />}
+                {isSaving && <CircularProgress size={51} className={fabProgress} />}
               </div>
             </div>
             <textarea
@@ -111,7 +127,7 @@ const Notes = ({user}) => {
                 maxHeight: "50vh",
                 height: "50vh",
               }}
-              placeholder='Write down what you observed today, key things you learned or great experiences'
+              placeholder='Write down what you observed today? Key things you learned OR Great Experiences You had'
               onChange={handleChange}
               value={note.content}
             />
