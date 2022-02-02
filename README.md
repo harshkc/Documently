@@ -1,34 +1,41 @@
-# [Xpensly](https://xpensly.netlify.app/) <img width="60" src="images/xpensly-logo.png">
+# [Documently](https://xpensly.netlify.app/)
 
-![React Badge](http://img.shields.io/badge/Powered%20By-React-blue?style=for-the-badge&logo=)&nbsp;
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=&logoColor)&nbsp;
-![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=&logoColor=white)&nbsp;
-![CSS](https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=&logoColor=white)&nbsp;
+![React Badge](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Firebase](https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black)
+![MUI](https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white)
 
-[![Website Badge](https://img.shields.io/badge/Visit-Now-green?style=for-the-badge&logo=vercel)](https://xpensly.netlify.app/)
+[![Website Badge](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://xpensly.netlify.app/)
+<img src="https://img.shields.io/badge/PWA-282C34?logo=PWA" alt="PWA" title="PWA" height="28" width="80" />
 
-## Overview 👀
+## Overview  
 
-<img src="images/xpensly-light.jpeg">
-<img src="images/xpensly-dark.jpeg">
+<img src="images/documently-login.png">
+<img src="images/documently-xpensly.png">
+<img src="images/documently-xpensly-dark.png">
+<img src="images/documently-journaly.png">
+<img src="images/documently-journaly-dark.png">
 
-- Manage day to day transactions easily 💸
-- Voice 🎙️ based transactions management 💰
-- Clean and Responsive UI with light ⚡ and dark mode
-- Persistence of data across multiple sessions
+- Manage day-to-day transactions easily
+- Manage daily Journaling easily
+- Voice 🎙️ based transactions management
+- Clean and Responsive UI with light and dark mode
+- Persistence of data across multiple devices
+- Installable PWA with offline capabilities
 
-## What is Xpensly?
+## What is Documently?
 
-#### Xpensly is a web app for journaling day to day transactions. Users can create or delete transactions details hands-free with ease.
+Documently is a progressive web app that helps you document your day-to-day transactions and daily Journals at single place.
 
 ## Project setup 💻
 
 ```
 > Cloning the repo
-    >> git clone https://github.com/harhskc/Xpensly.git
-    >> cd Xpensly
+    >> git clone https://github.com/harhskc/Documently.git
+    >> cd Documently
 > Install all dependencies
     >> yarn install
+> Setup .env
+    >> Copy .env.example then fill in your keys
 > Start the app on localhost:3000
     >> yarn start
 > Visit the website on http://localhost:3000/
