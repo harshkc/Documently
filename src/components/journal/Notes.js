@@ -4,6 +4,9 @@ import useStyles from "./styles";
 import {db} from "../../firebase";
 import {doc, getDoc, setDoc, deleteDoc} from "firebase/firestore";
 import {toShortFormat} from "../../utils/formatDate";
+import {CircularProgress, Fab} from "@material-ui/core";
+import CheckIcon from "@material-ui/icons/Check";
+import SaveIcon from "@material-ui/icons/Save";
 
 const getInitialState = () => {
   return JSON.parse(localStorage.getItem("notes")) || "";
@@ -11,6 +14,8 @@ const getInitialState = () => {
 
 const Notes = ({user}) => {
   const [note, setNote] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const timeout = React.useRef();
   const today = toShortFormat(new Date());
 
@@ -40,6 +45,7 @@ const Notes = ({user}) => {
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false);
   };
 
   const deleteNoteFromDB = async () => {
@@ -53,13 +59,14 @@ const Notes = ({user}) => {
 
   const handleChange = (e) => {
     clearTimeout(timeout.current);
+    setIsLoading(true);
     setNote(e.target.value);
     timeout.current = setTimeout(() => {
       addNoteToDB(e.target.value);
     }, 3000);
   };
 
-  const {root, cardContent, divider} = useStyles();
+  const {root, cardContent, divider, wrapper, fabProgress, flexed} = useStyles();
   return (
     <Card className={root}>
       <Grid container spacing={2}>
@@ -81,9 +88,17 @@ const Notes = ({user}) => {
       <CardContent className={cardContent}>
         <Grid container>
           <Grid item xs={12}>
-            <Typography variant='h6'>
-              <strong>Reflect Your Day</strong>
-            </Typography>
+            <div className={flexed}>
+              <span style={{fontSize: "22px", fontWeight: "bold", marginRight: "0.5rem"}}>
+                Reflect Your Day
+              </span>
+              <div className={wrapper}>
+                <Fab size='small' aria-label='save' color='inherit'>
+                  {!isLoading ? <CheckIcon /> : <SaveIcon />}
+                </Fab>
+                {isLoading && <CircularProgress size={51} className={fabProgress} />}
+              </div>
+            </div>
             <textarea
               style={{
                 margin: "10px 0",
