@@ -137,7 +137,7 @@ const App = ({theme, toggleTheme, handleLogout, user}) => {
               <MenuIcon />
             </IconButton>
             <Typography variant='h6' color='inherit'>
-              Xpensly
+              Documently
             </Typography>
             <Avatar
               photoURL={user.photoURL}
@@ -159,16 +159,20 @@ const App = ({theme, toggleTheme, handleLogout, user}) => {
               open={openDrawer}
               onClose={() => setOpenDrawer(false)}
             >
-              <List style={{margin: "2rem 1rem 2rem 1rem"}}>
+              <List style={{margin: "2rem 1rem 2rem 1rem", textDecoration: "none"}}>
                 <ListItem onClick={() => setOpenDrawer(false)}>
                   <ListItemText>
-                    <Link to='/'>Xpensly</Link>
+                    <Link style={{textDecoration: "none", color: "inherit"}} to='/'>
+                      Xpensly
+                    </Link>
                   </ListItemText>
                 </ListItem>
                 <hr />
                 <ListItem onClick={() => setOpenDrawer(false)}>
                   <ListItemText>
-                    <Link to='/journaly'>Journally</Link>
+                    <Link style={{textDecoration: "none", color: "inherit"}} to='/journaly'>
+                      Journaly
+                    </Link>
                   </ListItemText>
                 </ListItem>
                 <hr />

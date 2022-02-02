@@ -24,7 +24,7 @@ const Notes = ({user}) => {
       if (noteSnapshot.exists()) {
         setNote(noteSnapshot.data());
       } else {
-        console.log("No notes found");
+        setNote("");
       }
     } catch (e) {
       console.log(e);
@@ -38,9 +38,7 @@ const Notes = ({user}) => {
 
   const addNoteToDB = async (value, theDay) => {
     try {
-      console.log("note", note);
       await setDoc(doc(db, "users", user.id, "notes", theDay), {content: value});
-      console.log("Note added to firestore");
     } catch (error) {
       console.log(error);
     }
@@ -67,17 +65,13 @@ const Notes = ({user}) => {
   return (
     <Card className={root}>
       <Grid container spacing={2}>
-        <Grid item xs={8}>
+        <Grid item xs={7} sm={8}>
           <CardHeader
-            title={
-              <Typography variant='h3' style={{fontWeight: "bold"}}>
-                Journaly
-              </Typography>
-            }
+            title={<span style={{fontSize: "2.5rem", fontWeight: "bold"}}>Journaly</span>}
             style={{color: "#E77C97"}}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={5} sm={4}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
               disableToolbar

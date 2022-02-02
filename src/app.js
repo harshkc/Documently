@@ -37,7 +37,6 @@ const App = () => {
     if (window.confirm("Are you sure you want to logout?")) {
       signOut(auth)
         .then(() => {
-          console.log("Logged out");
           setUser(null);
           localStorage.removeItem("XauthUser");
         })

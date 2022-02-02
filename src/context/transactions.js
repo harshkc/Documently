@@ -45,7 +45,6 @@ const TransactionProvider = ({children, user}) => {
   const addTransactionToDB = async (transaction) => {
     try {
       await setDoc(doc(db, "users", user.id, "transactions", transaction.id), transaction);
-      console.log("Transaction added to firestore");
     } catch (error) {
       console.log(error);
     }
